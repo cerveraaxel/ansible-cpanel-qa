@@ -1,0 +1,6 @@
+---
+  - name: Run UPCP
+    #shell: nohup /usr/local/cpanel/scripts/upcp </dev/null >/dev/null 2>&1 &
+    shell: /usr/local/cpanel/scripts/upcp
+    async: 3600
+    poll: 0

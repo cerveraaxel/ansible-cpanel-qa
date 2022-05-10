@@ -1,0 +1,7 @@
+---
+- name: Set cPanel version in /etc/cpupdate.conf
+  lineinfile:
+    state: present
+    regexp: '^CPANEL='
+    line: "CPANEL={{ cp_version }}"
+    path: /etc/cpupdate.conf

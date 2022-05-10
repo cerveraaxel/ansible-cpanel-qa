@@ -1,0 +1,14 @@
+---
+- hosts: all
+  name: Upgrade cPanel version
+  vars_prompt:
+    - name: cp_version
+      prompt: Specify the cPanel version to upgrade to
+      private: no
+
+  tasks:
+    - name: Modify /etc/cpupdate.conf
+      import_tasks: common/cpanel/set_cpversion.yaml
+
+    - name: Run UPCP
+      import_tasks: common/cpanel/run_upcp.yaml

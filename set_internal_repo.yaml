@@ -1,0 +1,21 @@
+---
+- hosts: all
+  name: Set Internal Repo
+  vars:
+    repository_name: "cpanel-plugins"
+    repo_url_rhel: "https://[REDACTED]/cpanel-plugins/centos/$cp_centos_major_version"
+    repo_url_ubuntu: "https://[REDACTED]/cpanel-plugins/xUbuntu_20.04_signed/"
+  
+  tasks:
+
+    - name: Prepare Ubuntu repository
+      when: ansible_os_family == "Debian"
+      file:
+        path: "/etc/apt/sources.list.d/{{ repository_name }}.list"
+        state: absent
+
+    - name: Set internal cpanel-plugins repository
+      import_tasks: common/tasks/configure_repository.yaml
+
+    - name: Retain custom repo
+      import_tasks: common/cpanel/retain_custom_repo.yaml

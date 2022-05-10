@@ -1,0 +1,20 @@
+---
+- name: Set sources configuration
+  lineinfile:
+    state: present
+    line: "CPANEL_PLUGINS=/var/cpanel/custom_repo.txt"
+    path: /etc/cpsources.conf
+
+- name: Configure source (RHEL)
+  when: ansible_os_family == "RedHat"
+  copy:
+    remote_src: yes
+    src: "/etc/yum.repos.d/{{ repository_name }}.repo"
+    dest: /var/cpanel/custom_repo.txt
+
+- name: Configure source (Ubuntu)
+  when: ansible_os_family == "Debian"
+  copy:
+    remote_src: yes
+    src: "/etc/apt/sources.list.d/{{ repository_name }}.list"
+    dest: /var/cpanel/custom_repo.txt

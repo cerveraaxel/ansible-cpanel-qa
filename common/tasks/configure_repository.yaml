@@ -1,0 +1,17 @@
+---
+- name: "Configuring {{ repository_name }} repository (RHEL)"
+  when: ansible_os_family == "RedHat"
+  yum_repository:
+    name: "{{ repository_name }}"
+    description: "{{ repository_name }}"
+    baseurl: "{{ repo_url_rhel }}"
+    enabled: yes
+    gpgcheck: no
+    cost: '50'
+
+- name: Configuring {{ repository_name }} repository (Ubuntu)
+  when: ansible_os_family == "Debian"
+  apt_repository:
+    filename: "{{ repository_name }}"
+    repo: "deb [trusted=yes] {{ repo_url_ubuntu }} ./"
+    update_cache: yes
